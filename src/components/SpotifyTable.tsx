@@ -29,6 +29,7 @@ import {
   type SortingState,
 } from "@tanstack/react-table";
 import SortableHeader from "./SortableHeader";
+import ExportCSV from "./ExportCSV";
 
 type Track = Record<string, string>;
 
@@ -150,6 +151,7 @@ const SpotifyTable: React.FC<SpotifyTableProps> = ({ tracks }) => {
     <div className="overflow-x-auto">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-2">
         <GlobalSearch value={globalFilter} onChange={setGlobalFilter} />
+        <ExportCSV table={table} filename="spotify_export.csv" />
       </div>
       {/* Filters Row */}
       <table className="min-w-full border border-gray-200">
