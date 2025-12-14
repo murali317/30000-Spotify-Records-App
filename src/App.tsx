@@ -36,7 +36,7 @@ function App() {
       {error && <ErrorMessage message={error} />}
       {!loading && !error && (
         <div className="w-full max-w-6xl bg-white rounded shadow p-6">
-          <SpotifyTable tracks={tracks} />
+          <SpotifyTable tracks={tracks} setTracks={setTracks} />
         </div>
       )}
     </div>
