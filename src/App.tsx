@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Papa from 'papaparse';
 import SpotifyTable from './components/SpotifyTable';
 import LoadingSpinner from './components/LoadingSpinner';
+import ErrorMessage from './components/ErrorMessage.tsx'; 
 
 type Track = Record<string, string>;
 
@@ -32,6 +33,7 @@ function App() {
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
       <h1 className="text-3xl font-bold mb-6 text-blue-700">Spotify Tracks Table Management</h1>
       {loading && <LoadingSpinner />}
+      {error && <ErrorMessage message={error} />}
       {!loading && !error && (
         <div className="w-full max-w-6xl bg-white rounded shadow p-6">
           <SpotifyTable tracks={tracks} />

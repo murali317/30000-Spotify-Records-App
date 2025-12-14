@@ -1,3 +1,19 @@
+import React, { useMemo, useState } from "react";
+import Pagination from "./Pagination";
+import GlobalSearch from "./GlobalSearch";
+import {
+  useReactTable,
+  getCoreRowModel,
+  flexRender,
+  getPaginationRowModel,
+  getSortedRowModel,
+  getFilteredRowModel,
+  type ColumnDef,
+  type SortingState,
+} from "@tanstack/react-table";
+import SortableHeader from "./SortableHeader";
+import ExportCSV from "./ExportCSV";
+
 // Utility to highlight matching text
 function highlightMatch(text: string, search: string) {
   if (!search) return text;
@@ -16,21 +32,6 @@ function highlightMatch(text: string, search: string) {
     )
   );
 }
-import React, { useMemo, useState } from "react";
-import Pagination from "./Pagination";
-import GlobalSearch from "./GlobalSearch";
-import {
-  useReactTable,
-  getCoreRowModel,
-  flexRender,
-  getPaginationRowModel,
-  getSortedRowModel,
-  getFilteredRowModel,
-  type ColumnDef,
-  type SortingState,
-} from "@tanstack/react-table";
-import SortableHeader from "./SortableHeader";
-import ExportCSV from "./ExportCSV";
 
 type Track = Record<string, string>;
 
@@ -52,6 +53,7 @@ interface SpotifyTableProps {
 }
 
 const SpotifyTable: React.FC<SpotifyTableProps> = ({ tracks }) => {
+  // throw new Error("Test error boundary!"); // for testing error boundary
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [pageSizeSelectFocused, setPageSizeSelectFocused] = useState(false);
@@ -64,7 +66,9 @@ const SpotifyTable: React.FC<SpotifyTableProps> = ({ tracks }) => {
           <SortableHeader label="Track Name" column={column} />
         ),
         cell: (info) => {
-          const filterValue = info.table.getColumn("track_name")?.getFilterValue() as string;
+          const filterValue = info.table
+            .getColumn("track_name")
+            ?.getFilterValue() as string;
           const value = info.getValue() as string;
           if (filterValue) {
             return highlightMatch(value, filterValue);
@@ -80,7 +84,9 @@ const SpotifyTable: React.FC<SpotifyTableProps> = ({ tracks }) => {
           <SortableHeader label="Artist" column={column} />
         ),
         cell: (info) => {
-          const filterValue = info.table.getColumn("track_artist")?.getFilterValue() as string;
+          const filterValue = info.table
+            .getColumn("track_artist")
+            ?.getFilterValue() as string;
           const value = info.getValue() as string;
           if (filterValue) {
             return highlightMatch(value, filterValue);
@@ -226,9 +232,9 @@ const SpotifyTable: React.FC<SpotifyTableProps> = ({ tracks }) => {
                 <th
                   key={header.id}
                   className={
-                    `px-2 py-0.5 border-b text-base font-bold text-gray-800 tracking-wide bg-gray-50 whitespace-normal break-words text-center align-middle ` +
+                    `px-2 py-0.5 border-b font-bold text-gray-800 tracking-wide bg-gray-50 whitespace-normal break-words text-center align-middle text-base md:text-sm lg:text-base ` +
                     (header.column.id === "track_popularity"
-                      ? "md:min-w-[120px] md:w-[140px] lg:min-w-[160px] lg:w-[180px]"
+                      ? "md:min-w-[80px] md:w-[90px] lg:min-w-[160px] lg:w-[180px]"
                       : "")
                   }
                   style={{ wordBreak: "break-word" }}
@@ -263,7 +269,7 @@ const SpotifyTable: React.FC<SpotifyTableProps> = ({ tracks }) => {
                     className={
                       `px-2 py-2 border-b text-sm text-gray-800 whitespace-normal break-words text-center ` +
                       (cell.column.id === "track_popularity"
-                        ? "md:min-w-[120px] md:w-[140px] lg:min-w-[160px] lg:w-[180px]"
+                        ? "md:min-w-[80px] md:w-[70px] lg:min-w-[160px] lg:w-[180px]"
                         : "")
                     }
                     style={{ wordBreak: "break-word" }}
