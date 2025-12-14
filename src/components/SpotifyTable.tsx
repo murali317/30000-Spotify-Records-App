@@ -218,23 +218,23 @@ const SpotifyTable: React.FC<SpotifyTableProps> = ({ tracks, setTracks }) => {
 
   return (
     <div className="w-full flex flex-col min-w-0">
-      {/* Batch actions bar */}
-      <div className="flex gap-2 mb-2 self-end">
-        <button
-          className="px-3 py-1 rounded bg-blue-500 text-white text-xs hover:bg-blue-600 disabled:bg-gray-300 disabled:text-gray-500"
-          onClick={handleExportSelected}
-          disabled={selectedRowData.length === 0}
-        >
-          Export Selected
-        </button>
-        <button
-          className="px-3 py-1 rounded bg-red-500 text-white text-xs hover:bg-red-600 disabled:bg-gray-300 disabled:text-gray-500"
-          onClick={handleDeleteSelected}
-          disabled={selectedRowData.length === 0}
-        >
-          Delete Selected
-        </button>
-      </div>
+      {/* Batch actions bar - only show when rows are selected */}
+      {selectedRowData.length > 0 && (
+        <div className="flex gap-2 mb-2 self-end">
+          <button
+            className="px-3 py-1 rounded bg-blue-500 text-white text-xs hover:bg-blue-600"
+            onClick={handleExportSelected}
+          >
+            Export Selected ({selectedRowData.length})
+          </button>
+          <button
+            className="px-3 py-1 rounded bg-red-500 text-white text-xs hover:bg-red-600"
+            onClick={handleDeleteSelected}
+          >
+            Delete Selected ({selectedRowData.length})
+          </button>
+        </div>
+      )}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-2">
         <GlobalSearch value={globalFilter} onChange={setGlobalFilter} />
         <ExportCSV table={table} filename="spotify_export.csv" />
