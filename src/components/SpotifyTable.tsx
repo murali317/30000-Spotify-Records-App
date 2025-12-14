@@ -8,7 +8,7 @@ function highlightMatch(text: string, search: string) {
   const parts = String(text).split(regex);
   return parts.map((part, i) =>
     regex.test(part) ? (
-      <span key={i} className="bg-yellow-200 text-black rounded px-1">
+      <span key={i} className="bg-yellow-200 text-black rounded">
         {part}
       </span>
     ) : (
@@ -62,8 +62,15 @@ const SpotifyTable: React.FC<SpotifyTableProps> = ({ tracks }) => {
         accessorKey: "track_name",
         header: ({ column }) => (
           <SortableHeader label="Track Name" column={column} />
-        ), // custom sortable header
-        cell: (info) => info.getValue(),
+        ),
+        cell: (info) => {
+          const filterValue = info.table.getColumn("track_name")?.getFilterValue() as string;
+          const value = info.getValue() as string;
+          if (filterValue) {
+            return highlightMatch(value, filterValue);
+          }
+          return value;
+        },
         enableSorting: true,
         enableColumnFilter: true,
       },
@@ -71,8 +78,15 @@ const SpotifyTable: React.FC<SpotifyTableProps> = ({ tracks }) => {
         accessorKey: "track_artist",
         header: ({ column }) => (
           <SortableHeader label="Artist" column={column} />
-        ), // custom sortable header
-        cell: (info) => info.getValue(),
+        ),
+        cell: (info) => {
+          const filterValue = info.table.getColumn("track_artist")?.getFilterValue() as string;
+          const value = info.getValue() as string;
+          if (filterValue) {
+            return highlightMatch(value, filterValue);
+          }
+          return value;
+        },
         enableSorting: true,
         enableColumnFilter: true,
       },
