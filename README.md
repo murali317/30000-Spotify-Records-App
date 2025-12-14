@@ -1,72 +1,80 @@
-# React + TypeScript + Vite
+# Spotify Tracks Table Management App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Setup Instructions
 
-Currently, two official plugins are available:
+1. **Clone the repository**
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+3. **Add your dataset:**
+   - Place your `spotify_tracks.csv` file in the `public/` directory.
+4. **Run the app locally:**
+   ```bash
+   npm run dev
+   ```
+5. **Open in browser:**
+   - Visit [http://localhost:5173](http://localhost:5173) (or the port shown in your terminal)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Feature List
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Table display of Spotify tracks** with sorting, filtering, and pagination
+- **Global search** and per-column filters (name, artist, genre)
+- **CSV export** (all or selected rows, with correct headers)
+- **Bulk actions:**
+  - Multi-row selection with checkboxes
+  - Pagination-aware select all
+  - Export selected rows
+  - Delete selected rows
+- **Column management:**
+  - Resizable columns
+- **Responsive design** for desktop and mobile
+- **Dark/light mode toggle** (Context API)
+- **Loading, error, and empty states**
+- **Error boundary** for user-friendly crash handling
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Dataset Choice
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+**Dataset:** Spotify Tracks CSV
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- This is chosen for its real-world relevance, variety of fields (track, artist, album, genre, popularity, etc.), and suitability for demonstrating table features like filtering, sorting, and bulk actions.
+- The dataset is easy to parse and large enough to showcase performance and UX features.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Technology Decisions & Trade-offs
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **React + TypeScript:** Modern, type-safe, and widely adopted for robust UI development.
+- **Vite:** Fast dev/build tool for React projects.
+- **TanStack Table v8:** Powerful, flexible table logic (sorting, filtering, pagination, selection, resizing, etc.).
+- **TailwindCSS:** Utility-first CSS for rapid, responsive, and themeable UI.
+- **PapaParse:** Fast CSV parsing and export.
+- **Context API:** For global theme management (dark/light mode).
+- **Trade-offs:**
+  - TanStack Table is more complex than basic table libs, but enables advanced features and performance.
+  - Tailwind requires utility class learning, but results in maintainable, scalable styles.
+  - No backend: all data is client-side for simplicity and demo purposes.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
+---
+
+## Known Limitations & Future Improvements
+
+- **No persistent storage:** All changes (delete, selection) are in-memory only.
+- **No backend integration:** All data is loaded from CSV; no live updates or multi-user support.
+- **No undo for delete:** Deleting rows is permanent for the session.
+- **No advanced analytics:** Only table-based features are implemented.
+- **Accessibility:** Basic ARIA labels are present, but further improvements possible.
+- **Column management:** Only resizing is implemented; column reordering and advanced visibility management could be added.
+- **Testing:** No automated tests included.
+- **Performance:** Handles large CSVs well, but not optimized for 10k+ rows.
+
+---
+
+**Feel free to fork and extend!**
     },
   },
 ])
