@@ -74,5 +74,5 @@
 
 ---
 
-- **Developer:** Muralikrishna Devarakonda 🧑‍💻
-- **Thanks to:** Nirmaan (Stratos Infra MEP firm) 🏢
+🔹 **Developer:** Muralikrishna Devarakonda 🧑‍💻
+🔹 **Thanks to:** Nirmaan (Stratos Infra MEP firm) 🏢
