@@ -34,9 +34,17 @@ import ExportCSV from "./ExportCSV";
 
 type Track = Record<string, string>;
 
-
 const genreOptions = [
-  "Pop", "Rock", "Hip-Hop", "Dance", "Electronic", "Indie", "Folk", "Jazz", "Classical", "Other"
+  "Pop",
+  "Rock",
+  "Hip-Hop",
+  "Dance",
+  "Electronic",
+  "Indie",
+  "Folk",
+  "Jazz",
+  "Classical",
+  "Other",
 ];
 
 interface SpotifyTableProps {
@@ -52,41 +60,53 @@ const SpotifyTable: React.FC<SpotifyTableProps> = ({ tracks }) => {
     () => [
       {
         accessorKey: "track_name",
-        header: ({ column }) => <SortableHeader label="Track Name" column={column} />, // custom sortable header
-        cell: info => info.getValue(),
+        header: ({ column }) => (
+          <SortableHeader label="Track Name" column={column} />
+        ), // custom sortable header
+        cell: (info) => info.getValue(),
         enableSorting: true,
         enableColumnFilter: true,
       },
       {
         accessorKey: "track_artist",
-        header: ({ column }) => <SortableHeader label="Artist" column={column} />, // custom sortable header
-        cell: info => info.getValue(),
+        header: ({ column }) => (
+          <SortableHeader label="Artist" column={column} />
+        ), // custom sortable header
+        cell: (info) => info.getValue(),
         enableSorting: true,
         enableColumnFilter: true,
       },
       {
         accessorKey: "track_album_name",
-        header: ({ column }) => <SortableHeader label="Album" column={column} />, // custom sortable header
-        cell: info => info.getValue(),
+        header: ({ column }) => (
+          <SortableHeader label="Album" column={column} />
+        ), // custom sortable header
+        cell: (info) => info.getValue(),
         enableSorting: true,
       },
       {
         accessorKey: "playlist_genre",
-        header: ({ column }) => <SortableHeader label="Genre" column={column} />, // custom sortable header
-        cell: info => info.getValue(),
+        header: ({ column }) => (
+          <SortableHeader label="Genre" column={column} />
+        ), // custom sortable header
+        cell: (info) => info.getValue(),
         enableSorting: true,
         enableColumnFilter: true,
       },
       {
         accessorKey: "track_popularity",
-        header: ({ column }) => <SortableHeader label="Popularity" column={column} />, // custom sortable header
-        cell: info => info.getValue(),
+        header: ({ column }) => (
+          <SortableHeader label="Popularity" column={column} />
+        ), // custom sortable header
+        cell: (info) => info.getValue(),
         enableSorting: true,
       },
       {
         accessorKey: "track_album_release_date",
-        header: ({ column }) => <SortableHeader label="Release Date" column={column} />, // custom sortable header
-        cell: info => info.getValue(),
+        header: ({ column }) => (
+          <SortableHeader label="Release Date" column={column} />
+        ), // custom sortable header
+        cell: (info) => info.getValue(),
         enableSorting: true,
       },
     ],
@@ -127,7 +147,8 @@ const SpotifyTable: React.FC<SpotifyTableProps> = ({ tracks }) => {
                 type="text"
                 placeholder="Filter by name"
                 value={
-                  (table.getColumn("track_name")?.getFilterValue() as string) ?? ""
+                  (table.getColumn("track_name")?.getFilterValue() as string) ??
+                  ""
                 }
                 onChange={(e) =>
                   table.getColumn("track_name")?.setFilterValue(e.target.value)
@@ -141,10 +162,14 @@ const SpotifyTable: React.FC<SpotifyTableProps> = ({ tracks }) => {
                 type="text"
                 placeholder="Filter by artist"
                 value={
-                  (table.getColumn("track_artist")?.getFilterValue() as string) ?? ""
+                  (table
+                    .getColumn("track_artist")
+                    ?.getFilterValue() as string) ?? ""
                 }
                 onChange={(e) =>
-                  table.getColumn("track_artist")?.setFilterValue(e.target.value)
+                  table
+                    .getColumn("track_artist")
+                    ?.setFilterValue(e.target.value)
                 }
               />
             </th>
@@ -156,10 +181,14 @@ const SpotifyTable: React.FC<SpotifyTableProps> = ({ tracks }) => {
                 className="min-w-[120px] w-full text-xs px-3 py-1.5 border border-gray-300 rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition bg-gray-50 text-gray-700"
                 title="Filter by genre"
                 value={
-                  (table.getColumn("playlist_genre")?.getFilterValue() as string) ?? ""
+                  (table
+                    .getColumn("playlist_genre")
+                    ?.getFilterValue() as string) ?? ""
                 }
                 onChange={(e) =>
-                  table.getColumn("playlist_genre")?.setFilterValue(e.target.value)
+                  table
+                    .getColumn("playlist_genre")
+                    ?.setFilterValue(e.target.value)
                 }
               >
                 <option value="">All Genres</option>
@@ -184,9 +213,11 @@ const SpotifyTable: React.FC<SpotifyTableProps> = ({ tracks }) => {
                   key={header.id}
                   className={
                     `px-2 py-0.5 border-b text-base font-bold text-gray-800 tracking-wide bg-gray-50 whitespace-normal break-words text-center align-middle ` +
-                    (header.column.id === 'track_popularity' ? 'md:min-w-[120px] md:w-[140px] lg:min-w-[160px] lg:w-[180px]' : '')
+                    (header.column.id === "track_popularity"
+                      ? "md:min-w-[120px] md:w-[140px] lg:min-w-[160px] lg:w-[180px]"
+                      : "")
                   }
-                  style={{ wordBreak: 'break-word' }}
+                  style={{ wordBreak: "break-word" }}
                 >
                   <div className="w-full text-center flex justify-center items-center py-0.5">
                     {flexRender(
@@ -202,7 +233,10 @@ const SpotifyTable: React.FC<SpotifyTableProps> = ({ tracks }) => {
         <tbody>
           {table.getRowModel().rows.length === 0 ? (
             <tr>
-              <td colSpan={table.getAllLeafColumns().length} className="text-center py-8 text-gray-500">
+              <td
+                colSpan={table.getAllLeafColumns().length}
+                className="text-center py-8 text-gray-500"
+              >
                 No results found. Try adjusting your filters or search.
               </td>
             </tr>
@@ -214,9 +248,11 @@ const SpotifyTable: React.FC<SpotifyTableProps> = ({ tracks }) => {
                     key={cell.id}
                     className={
                       `px-2 py-2 border-b text-sm text-gray-800 whitespace-normal break-words text-center ` +
-                      (cell.column.id === 'track_popularity' ? 'md:min-w-[120px] md:w-[140px] lg:min-w-[160px] lg:w-[180px]' : '')
+                      (cell.column.id === "track_popularity"
+                        ? "md:min-w-[120px] md:w-[140px] lg:min-w-[160px] lg:w-[180px]"
+                        : "")
                     }
-                    style={{ wordBreak: 'break-word' }}
+                    style={{ wordBreak: "break-word" }}
                   >
                     {(() => {
                       const value = cell.getValue();
@@ -238,7 +274,11 @@ const SpotifyTable: React.FC<SpotifyTableProps> = ({ tracks }) => {
         </tbody>
       </table>
       {/* Pagination Controls at Bottom */}
-      <Pagination table={table} pageSizeSelectFocused={pageSizeSelectFocused} setPageSizeSelectFocused={setPageSizeSelectFocused} />
+      <Pagination
+        table={table}
+        pageSizeSelectFocused={pageSizeSelectFocused}
+        setPageSizeSelectFocused={setPageSizeSelectFocused}
+      />
     </div>
   );
 };
