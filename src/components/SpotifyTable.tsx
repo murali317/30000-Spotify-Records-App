@@ -147,7 +147,6 @@ const SpotifyTable: React.FC<SpotifyTableProps> = ({ tracks, setTracks }) => {
   // Get visible row IDs for current page
   const visibleRowIds = table.getRowModel().rows.map(row => row.id);
   const allVisibleSelected = visibleRowIds.length > 0 && visibleRowIds.every(id => selectedRows[id]);
-  const someVisibleSelected = visibleRowIds.some(id => selectedRows[id]);
 
   // Get selected row data
   const selectedRowData = table.getRowModel().rows
