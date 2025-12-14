@@ -136,6 +136,11 @@ const SpotifyTable: React.FC<SpotifyTableProps> = ({ tracks, setTracks }) => {
     getFilteredRowModel: getFilteredRowModel(),
     onGlobalFilterChange: setGlobalFilter,
     globalFilterFn: "includesString",
+    initialState: {
+      pagination: {
+        pageSize: 25,
+      },
+    },
     debugTable: false,
   });
 
