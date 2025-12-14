@@ -1,6 +1,6 @@
-# Spotify Tracks Table Management App
+<h1 align="center">Spotify Tracks Table Management App</h1>
 
-## Setup Instructions
+## ⚒️ Setup Instructions
 
 1. **Clone the repository**
 2. **Install dependencies:**
@@ -18,7 +18,7 @@
 
 ---
 
-## Feature List
+## 📜 Feature List
 
 - **Table display of Spotify tracks** with sorting, filtering, and pagination
 - **Global search** and per-column filters (name, artist, genre)
@@ -37,7 +37,7 @@
 
 ---
 
-## Dataset Choice
+## ©️ Dataset Choice
 
 **Dataset:** Spotify Tracks CSV
 
@@ -46,7 +46,7 @@
 
 ---
 
-## Technology Decisions & Trade-offs
+## 📈 Technology Decisions & Trade-offs
 
 - **React + TypeScript:** Modern, type-safe, and widely adopted for robust UI development.
 - **Vite:** Fast dev/build tool for React projects.
@@ -61,7 +61,7 @@
 
 ---
 
-## Known Limitations & Future Improvements
+## 🚀 Known Limitations & Future Improvements
 
 - **No persistent storage:** All changes (delete, selection) are in-memory only.
 - **No backend integration:** All data is loaded from CSV; no live updates or multi-user support.
@@ -74,8 +74,5 @@
 
 ---
 
-**Feel free to fork and extend!**
-    },
-  },
-])
-```
+🔹 **Developer:** Muralikrishna Devarakonda 🧑‍💻
+🔹 **Thanks to:** Nirmaan (Stratos Infra MEP firm) 🏢
