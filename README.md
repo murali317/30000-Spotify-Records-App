@@ -70,7 +70,12 @@
 - **Accessibility:** Basic ARIA labels are present, but further improvements possible.
 - **Column management:** Only resizing is implemented; column reordering and advanced visibility management could be added.
 - **Testing:** No automated tests included.
-- **Performance:** Handles large CSVs well, but not optimized for 10k+ rows.
+
+---
+
+## Live Link
+
+https://spotify-track-nirmaan.netlify.app/
 
 ---
 
