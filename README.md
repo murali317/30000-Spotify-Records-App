@@ -28,12 +28,10 @@
   - Pagination-aware select all
   - Export selected rows
   - Delete selected rows
-- **Column management:**
-  - Resizable columns
-- **Responsive design** for desktop and mobile
-- **Dark/light mode toggle** (Context API)
+- **Responsive design** for desktop and tablet
 - **Loading, error, and empty states**
 - **Error boundary** for user-friendly crash handling
+- All implemented features respect shorter time constraints (seconds, milliseconds for refreshing, downloading, sorting, searching & pagination...)
 
 ---
 
@@ -53,7 +51,6 @@
 - **TanStack Table v8:** Powerful, flexible table logic (sorting, filtering, pagination, selection, resizing, etc.).
 - **TailwindCSS:** Utility-first CSS for rapid, responsive, and themeable UI.
 - **PapaParse:** Fast CSV parsing and export.
-- **Context API:** For global theme management (dark/light mode).
 - **Trade-offs:**
   - TanStack Table is more complex than basic table libs, but enables advanced features and performance.
   - Tailwind requires utility class learning, but results in maintainable, scalable styles.
