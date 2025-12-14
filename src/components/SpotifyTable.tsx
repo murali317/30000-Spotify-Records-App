@@ -16,7 +16,6 @@ import {
 import SortableHeader from "./SortableHeader";
 import ExportCSV from "./ExportCSV";
 
-
 type Track = Record<string, string>;
 
 const genreOptions = [
@@ -45,7 +44,9 @@ const SpotifyTable: React.FC<SpotifyTableProps> = ({ tracks, setTracks }) => {
   const [globalFilter, setGlobalFilter] = useState("");
   const [pageSizeSelectFocused, setPageSizeSelectFocused] = useState(false);
   // Selection state: store selected row indices (row.id)
-  const [selectedRows, setSelectedRows] = useState<{ [rowId: string]: boolean }>({});
+  const [selectedRows, setSelectedRows] = useState<{
+    [rowId: string]: boolean;
+  }>({});
 
   const columns = useMemo<ColumnDef<Track>[]>(
     () => [
@@ -145,24 +146,27 @@ const SpotifyTable: React.FC<SpotifyTableProps> = ({ tracks, setTracks }) => {
   });
 
   // Get visible row IDs for current page
-  const visibleRowIds = table.getRowModel().rows.map(row => row.id);
-  const allVisibleSelected = visibleRowIds.length > 0 && visibleRowIds.every(id => selectedRows[id]);
+  const visibleRowIds = table.getRowModel().rows.map((row) => row.id);
+  const allVisibleSelected =
+    visibleRowIds.length > 0 && visibleRowIds.every((id) => selectedRows[id]);
 
   // Get selected row data
-  const selectedRowData = table.getRowModel().rows
-    .filter(row => selectedRows[row.id])
-    .map(row => row.original);
-
+  const selectedRowData = table
+    .getRowModel()
+    .rows.filter((row) => selectedRows[row.id])
+    .map((row) => row.original);
 
   // Batch delete handler (real)
   const handleDeleteSelected = () => {
     if (selectedRowData.length === 0) return;
     // Remove selected rows from tracks
-    setTracks(prev => prev.filter((_, idx) => {
-      // Find the row id for this index in the current table
-      const row = table.getRowModel().rows.find(r => r.index === idx);
-      return !row || !selectedRows[row.id];
-    }));
+    setTracks((prev) =>
+      prev.filter((_, idx) => {
+        // Find the row id for this index in the current table
+        const row = table.getRowModel().rows.find((r) => r.index === idx);
+        return !row || !selectedRows[row.id];
+      })
+    );
     setSelectedRows({});
   };
 
@@ -171,17 +175,24 @@ const SpotifyTable: React.FC<SpotifyTableProps> = ({ tracks, setTracks }) => {
     if (selectedRowData.length === 0) return;
     // Get visible columns and their display headers
     const visibleColumns = table.getVisibleLeafColumns();
-    const columnIds = visibleColumns.map(col => col.id);
-    const columnHeaders = visibleColumns.map(col => {
+    const columnIds = visibleColumns.map((col) => col.id);
+    const columnHeaders = visibleColumns.map((col) => {
       // Try to get the display label from the header renderer
       const header = col.columnDef.header;
       if (typeof header === "function") {
         // Get the actual header context from the table
-        const tableHeader = table.getHeaderGroups()[0]?.headers.find(h => h.column.id === col.id);
+        const tableHeader = table
+          .getHeaderGroups()[0]
+          ?.headers.find((h) => h.column.id === col.id);
         if (tableHeader) {
           const rendered = header(tableHeader.getContext());
           // If it's a React element with children, get the string
-          if (rendered && typeof rendered === "object" && "props" in rendered && rendered.props.label) {
+          if (
+            rendered &&
+            typeof rendered === "object" &&
+            "props" in rendered &&
+            rendered.props.label
+          ) {
             return rendered.props.label;
           }
           // Fallback: try to get string from rendered
@@ -192,9 +203,9 @@ const SpotifyTable: React.FC<SpotifyTableProps> = ({ tracks, setTracks }) => {
       return col.id;
     });
     // Map selected rows to only visible columns
-    const filteredRows = selectedRowData.map(row => {
+    const filteredRows = selectedRowData.map((row) => {
       const filtered: Record<string, any> = {};
-      columnIds.forEach(col => {
+      columnIds.forEach((col) => {
         filtered[col] = row[col];
       });
       return filtered;
@@ -202,7 +213,7 @@ const SpotifyTable: React.FC<SpotifyTableProps> = ({ tracks, setTracks }) => {
     // PapaParse with custom headers
     const csv = Papa.unparse({
       fields: columnHeaders,
-      data: filteredRows.map(row => columnIds.map(col => row[col]))
+      data: filteredRows.map((row) => columnIds.map((col) => row[col])),
     });
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
@@ -246,16 +257,20 @@ const SpotifyTable: React.FC<SpotifyTableProps> = ({ tracks, setTracks }) => {
             <th className="px-2 py-1 border-b text-center bg-gray-50">
               <RowCheckbox
                 checked={allVisibleSelected}
-                onChange={checked => {
-                  setSelectedRows(sel => {
+                onChange={(checked) => {
+                  setSelectedRows((sel) => {
                     const updated = { ...sel };
-                    visibleRowIds.forEach(id => {
+                    visibleRowIds.forEach((id) => {
                       updated[id] = checked;
                     });
                     return updated;
                   });
                 }}
-                ariaLabel={allVisibleSelected ? "Deselect all visible rows" : "Select all visible rows"}
+                ariaLabel={
+                  allVisibleSelected
+                    ? "Deselect all visible rows"
+                    : "Select all visible rows"
+                }
               />
             </th>
             {/* Track Name filter */}
@@ -276,7 +291,7 @@ const SpotifyTable: React.FC<SpotifyTableProps> = ({ tracks, setTracks }) => {
             {/* Artist filter */}
             <th className="px-4 py-1 border-b text-center bg-gray-50">
               <input
-                className="w-full text-xs px-3 py-1.5 border border-gray-300 rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition placeholder-gray-400 bg-gray-50"
+                className="min-w-[160px] w-full text-xs px-3 py-1.5 border border-gray-300 rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition placeholder-gray-400 bg-gray-50"
                 type="text"
                 placeholder="Filter by artist"
                 value={
@@ -320,26 +335,57 @@ const SpotifyTable: React.FC<SpotifyTableProps> = ({ tracks, setTracks }) => {
             {/* Popularity: no filter */}
             <th className="px-4 py-1 border-b text-center bg-gray-50"></th>
             {/* Release Date: no filter */}
-            <th className="px-4 py-1 border-b text-center bg-gray-50"></th>
+            <th className="px-4 py-1 border-b text-center bg-gray-50">
+              {/* Clear All Filters and Sortings buttons, side by side */}
+              <div className="flex justify-center gap-2">
+                {((table.getColumn("track_name")?.getFilterValue() as string) ||
+                  (table.getColumn("track_artist")?.getFilterValue() as string) ||
+                  (table.getColumn("playlist_genre")?.getFilterValue() as string)) && (
+                  <button
+                    className="px-3 py-1 rounded bg-red-500 text-white text-xs hover:bg-red-600 border border-red-600 transition"
+                    onClick={() => {
+                      table.getColumn("track_name")?.setFilterValue("");
+                      table.getColumn("track_artist")?.setFilterValue("");
+                      table.getColumn("playlist_genre")?.setFilterValue("");
+                    }}
+                  >
+                    Clear All Filters
+                  </button>
+                )}
+                {sorting.length > 0 && (
+                  <button
+                    className="px-3 py-1 rounded bg-red-500 text-white text-xs hover:bg-red-600 border border-red-600 transition"
+                    onClick={() => setSorting([])}
+                  >
+                    Clear All Sortings
+                  </button>
+                )}
+              </div>
+            </th>
           </tr>
         </thead>
         <thead className="bg-gray-50">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
-              {/* Row selection header cell (empty for now) */}
-              <th className="px-2 py-0.5 border-b bg-gray-50"></th>
+              {/* Row selection header cell (checkbox, minimal width) */}
+              <th className="px-1 border-b bg-gray-50 w-6"></th>
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
                   className={
-                    `px-2 py-0.5 border-b font-bold text-gray-800 tracking-wide bg-gray-50 whitespace-normal break-words text-center align-middle text-base md:text-sm lg:text-base ` +
-                    (header.column.id === "track_popularity"
-                      ? "md:min-w-[80px] md:w-[90px] lg:min-w-[160px] lg:w-[180px]"
-                      : "")
+                    `px-2 border-b font-bold text-gray-800 tracking-wide bg-gray-50 whitespace-normal break-words text-center align-middle text-base md:text-sm lg:text-base ` +
+                    (header.column.id === "track_name"
+                      ? "w-[140px] md:w-[150px] lg:w-[220px]"
+                      : header.column.id === "track_album_name"
+                        ? "w-[110px] md:w-[130px] lg:w-[200px]"
+                        : header.column.id === "track_album_release_date"
+                          ? "w-[110px] md:w-[100px] lg:w-[140px]"
+                          : ""
+                    )
                   }
                   style={{ wordBreak: "break-word" }}
                 >
-                  <div className="w-full text-center flex justify-center items-center py-0.5">
+                  <div className="w-full text-center flex justify-center items-center py-2">
                     {flexRender(
                       header.column.columnDef.header,
                       header.getContext()
@@ -367,7 +413,9 @@ const SpotifyTable: React.FC<SpotifyTableProps> = ({ tracks, setTracks }) => {
                 <td className="px-2 py-2 border-b text-center">
                   <RowCheckbox
                     checked={!!selectedRows[row.id]}
-                    onChange={checked => setSelectedRows(sel => ({ ...sel, [row.id]: checked }))}
+                    onChange={(checked) =>
+                      setSelectedRows((sel) => ({ ...sel, [row.id]: checked }))
+                    }
                     ariaLabel="Select row"
                   />
                 </td>
