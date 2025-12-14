@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import { highlightMatch } from "../utils/highlightMatch";
 import Pagination from "./Pagination";
 import GlobalSearch from "./GlobalSearch";
 import {
@@ -14,24 +15,6 @@ import {
 import SortableHeader from "./SortableHeader";
 import ExportCSV from "./ExportCSV";
 
-// Utility to highlight matching text
-function highlightMatch(text: string, search: string) {
-  if (!search) return text;
-  const regex = new RegExp(
-    `(${search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
-    "gi"
-  );
-  const parts = String(text).split(regex);
-  return parts.map((part, i) =>
-    regex.test(part) ? (
-      <span key={i} className="bg-yellow-200 text-black rounded">
-        {part}
-      </span>
-    ) : (
-      part
-    )
-  );
-}
 
 type Track = Record<string, string>;
 
