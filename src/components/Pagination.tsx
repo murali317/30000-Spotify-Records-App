@@ -30,10 +30,9 @@ const Pagination: React.FC<PaginationProps> = ({
           ))}
         </select>
         <span
-          className={`pointer-events-none absolute left-[38px] top-1/2 transform -translate-y-1/2 transition-transform duration-200 ${
+          className={`pointer-events-none absolute left-[38px] top-1/2 transform -translate-y-1/2 transition-transform duration-200 text-base ${
             pageSizeSelectFocused ? "rotate-180" : ""
           }`}
-          style={{ fontSize: "1rem" }}
         >
           ▼
         </span>

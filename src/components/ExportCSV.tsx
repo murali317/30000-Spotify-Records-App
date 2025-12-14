@@ -75,7 +75,6 @@ function ExportCSV<T>({ table, filename = "export.csv" }: ExportCSVProps<T>) {
     <button
       onClick={handleExport}
       className="bg-green-600 hover:bg-green-700 text-white font-semibold py-1 px-3 rounded shadow text-sm"
-      style={{ backgroundColor: "#22c55e" }} // Equivalent to Tailwind green-500. Extra inline style to ensure consistency.
       type="button"
     >
       Export CSV
